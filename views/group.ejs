@@ -1,0 +1,75 @@
+<% include _header.ejs %>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/script.groups.js" defer></script>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Hitick</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <% if(currentUser){ %>
+            <li>
+                <a href="javascript:void(0);">
+                    Hello, <%= currentUser.name() %>
+                </a>
+            </li>
+            <% if (group.adminId.equals(currentUser._id)) { %>
+            <li>
+                <a id="create-poll" href="javascript:void(0)">
+                    Push Poll
+                </a>
+            </li>
+            <% } %>
+            <li>
+                <a href="/logout">
+                    Logout
+                </a>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</nav>
+
+<!-- Group Name Header -->
+<div class="container">
+    <div class="page-header">
+        <h1>
+            <%= group.name() %>
+        </h1>
+    </div>
+</div>
+<div class="container">
+    <!-- The polls data -->
+    <% polls.forEach(function (poll) { %>
+    <div class="panel panel-default" data-pollId = "<%= poll._id %>">
+        <div class="panel-heading">
+            <%= poll.pollTopic %>
+        </div>
+        <div class="panel-body">
+            <ul class="list-inline">
+                <li>
+                    In Favor : <%= poll.inFavor %>
+                </li>
+                <li>
+                    Opposed : <%= poll.opposed %>
+                </li>
+                <li>
+                    Not Voted : <%= poll.notVoted %>
+                </li>
+            </ul>
+            <% if (poll.ongoing){ %>
+            <div class="btn-group pull-right">
+                <button class="btn btn-primary" id="yes-button">Yes</button>
+                <button class="btn btn-primary" id="no-button">No</button>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <% }); %>
+</div>
+</body>
+
+<% include _footer.ejs %>

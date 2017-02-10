@@ -1,0 +1,81 @@
+<% include _header.ejs %>
+<!-- Include the scripts specific to this view here -->
+<script src="/javascripts/script.homepage.js" defer></script>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Hitick</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <% if(currentUser){ %>
+            <li>
+                <a href="javascript:void(0);">
+                    Hello, <%= currentUser.name() %>
+                </a>
+            </li>
+            <li>
+                <a id="create_group" href="javascript:void(0);">
+                    Create Group
+                </a>
+            </li>
+            <li>
+                <a id="join_group" href="javascript:void(0);">
+                    Join Group
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    Logout
+                </a>
+            </li>
+            <% } else { %>
+            <li>
+                <a href="/login">
+                    Login
+                </a>
+            </li>
+            <li>
+                <a href="/signup">
+                    SignUp
+                </a>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</nav>
+
+<!-- Body of the rest of the page -->
+<div class="container">
+    <!-- Error Alert boxes -->
+    <% errors.forEach(function(error){ %>
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+    </div>
+    <% }); %>
+
+    <!-- Information Alert boxes -->
+    <% infos.forEach(function(info){ %>
+    <div class="alert alert-info" role="alert">
+        <%= info %>
+    </div>
+    <% }); %>
+
+    <!-- The list of the groups -->
+    <% if (groups) { %>
+    <% groups.forEach(function (group) { %>
+    <a href="javascript:void(0)" class="list-item" data-groupId="<%= group._id %>" style="text-decoration: none">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <%= group.name() %>
+            </div>
+        </div>
+    </a>
+    <% }); %>
+    <% } %>
+</div>
+</body>
+<% include _footer.ejs %>
