@@ -13,7 +13,14 @@ var User = require('../models/User');
 var ResponseEnum = require('../ResponseEnum');
 
 module.exports = function (io, fcm) {
-    router.post('/', function (req, res, next) {
+    router.post('/',  function(request , response , next){
+      if(request.isAuthenticated()){
+        next();
+      }
+      else{
+        return res.send({redirect:'/'});
+      }
+    },function (req, res, next) {
 
         var groupId = mongoose.Types.ObjectId(req.session.groupId);
         if (groupId) {
@@ -106,7 +113,7 @@ module.exports = function (io, fcm) {
                                 fcm.send(message, function (err, response) {
                                     if (err) {
                                         console.log("Something has gone wrong!");
-                                    } else {
+                                  } else {
                                         console.log("Successfully sent with response: ", response);
                                     }
                                 });
@@ -118,7 +125,14 @@ module.exports = function (io, fcm) {
         }
     });
 
-    router.post('/:pollId', function (req, res) {
+    router.post('/:pollId', function(request , response , next){
+      if(request.isAuthenticated()){
+        next();
+      }
+      else{
+          return res.send({redirect:'/'});
+      }
+    }, function (req, res) {
 
         var vote = Number(req.body.vote);
         var pollId = mongoose.Types.ObjectId(req.params.pollId);

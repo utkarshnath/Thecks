@@ -9,7 +9,14 @@ var Poll = require('../models/Poll');
 var router = express.Router();
 
 module.exports = function (io , fcm) {
-    router.post('/', function (request, response, next) {
+    router.post('/', function(request , response , next){
+      if(request.isAuthenticated()){
+        next();
+      }
+      else{
+        return response.send({redirect:'/'});
+      }
+    },function (request, response, next) {
         var groupName = request.body.groupName;
         var groupPassword = request.body.groupPassword;
 

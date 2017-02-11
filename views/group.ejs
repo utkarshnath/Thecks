@@ -66,8 +66,8 @@
                                     label: '# of Votes',
                                     data: [<%= poll.inFavor %>, <%= poll.opposed %>, <%= poll.notVoted %>],
                                     backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
                                         'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 99, 132, 0.2)',
                                         'rgba(255, 206, 86, 0.2)'
                                     ]
                                 }]
@@ -79,10 +79,14 @@
                     </script>
                 </div>
                 <div class="content">
-                    <div class="description">
-                        <%= poll.pollTopic %>
-                    </div>
+                  <div class="header">
+                      <%= poll.pollTopic %>
+                  </div>
                     <% if (poll.ongoing){ %>
+                    <div class="extra content">
+                      <% console.log(poll.submittedAt , poll.stipulatedTime , poll.submittedAt + poll.stipulatedTime) %>
+                      Expires At : <%= new Date(poll.submittedAt.getTime() + poll.stipulatedTime) %>
+                    </div>
                     <div class="extra content">
                         <div class="ui two buttons" id="btn-group">
                             <div class="ui basic green button" id="yes-button">Yes</div>

@@ -16,7 +16,7 @@ router.post("/", function (req, res, next) {
         }
         if (group) {
             req.flash("error", "Group already exists");
-            res.send({redirect : '/'});
+            return res.send({redirect : '/'});
         }
         var admin = req.user;
 
@@ -36,13 +36,13 @@ router.post("/", function (req, res, next) {
                 if (err) {
                     next(err);
                 }
-                
+
                 next();
             });
         });
     });
 }, function (req, res) {
-    
+
     res.send({redirect : '/'});
 });
 

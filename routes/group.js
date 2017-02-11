@@ -16,7 +16,14 @@ router.get('/', function (req, res) {
     res.send({redirect : '/group/' + req.session.groupId });
 });
 
-router.get('/:groupId', function (request, response) {
+router.get('/:groupId', function(request , response , next){
+  if(request.isAuthenticated()){
+    next();
+  }
+  else{
+    return response.send({redirect:'/'});
+  }
+} ,function (request, response) {
     var groupId = mongoose.Types.ObjectId(request.params.groupId);
     Group.findById(groupId , function (error, group) {
         if (error){
