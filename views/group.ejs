@@ -1,18 +1,20 @@
 <% include _header.ejs %>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/script.groups.js" defer></script>
+<script src="/javascripts/Chart.bundle.min.js"></script>
+
 <body>
 
 <!-- Navigation Bar -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">Evento</a>
-        </div>
+        <h1 class="ui teal header"
+            style="margin-top: 32px ; margin-left: 32px ; margin-bottom: 32px"><%= group.name() %></h1>
+        <div class="ui divider"></div>
         <ul class="nav navbar-nav navbar-right">
             <% if(currentUser){ %>
             <li>
-                <a href="javascript:void(0);">
+                <a href="/">
                     Hello, <%= currentUser.name() %>
                 </a>
             </li>
@@ -33,49 +35,71 @@
     </div>
 </nav>
 
-<!-- Group Name Header -->
-<div class="container">
-    <div class="page-header">
-        <h1>
-            <%= group.name() %>
-        </h1>
-    </div>
-</div>
 <div class="container">
     <!-- The polls data -->
-    <% polls.forEach(function (poll) {  %>
-    <script>
-        if(poll.voters.indexOf(currentUser._id)>0){
-            // user has voted
-        }else{
-            // user has not voted
-        }
-    </script>
-    <div class="panel panel-default" data-pollId = "<%= poll._id %>">
-        <div class="panel-heading">
-            <%= poll.pollTopic %>
-        </div>
-        <div class="panel-body">
-            <ul class="list-inline">
-                <li>
-                    In Favor : <%= poll.inFavor %>
-                </li>
-                <li>
-                    Opposed : <%= poll.opposed %>
-                </li>
-                <li>
-                    Not Voted : <%= poll.notVoted %>
-                </li>
-            </ul>
-            <% if (poll.ongoing){ %>
-            <div class="btn-group pull-right">
-                <button class="btn btn-primary" id="yes-button">Yes</button>
-                <button class="btn btn-primary" id="no-button">No</button>
+    <div class="ui three column grid">
+        <% polls.forEach(function (poll) { %>
+        <!--<script>
+            if(poll.voters.indexOf(currentUser._id)>0){
+                // user has voted
+            }else{
+                // user has not voted
+            }
+        </script>-->
+        <div class="column">
+            <div class="ui fluid card" data-pollId="<%= poll._id%>">
+                <div class="content">
+                    <canvas id="graph-<%= poll._id %>" height="100px" width="100px"></canvas>
+                    <!--Lets add a chart-->
+                    <script>
+                        var ctx = document.getElementById("graph-<%= poll._id %>");
+                        ctx.height = 200;
+                        ctx.width = 100;
+                        var options = {
+                            maintainAspectRatio: false
+                        }
+                        var myChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ["In Favor", "Opposed", "Not Voted"],
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: [<%= poll.inFavor %>, <%= poll.opposed %>, <%= poll.notVoted %>],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)'
+                                    ]
+                                }]
+                            },
+                            options: {
+                                maintainAspectRatio: false
+                            }
+                        });
+                    </script>
+                </div>
+                <div class="content">
+                    <div class="description">
+                        <%= poll.pollTopic %>
+                    </div>
+                    <% if (poll.ongoing){ %>
+                    <div class="extra content">
+                        <div class="ui two buttons" id="btn-group">
+                            <div class="ui basic green button" id="yes-button">Yes</div>
+                            <div class="ui basic red button" id="no-button">No</div>
+                        </div>
+                    </div>
+                    <% } else { %>
+                        <div class="extra content">
+                            Result Declared
+                        </div>
+                    <% }%>
+                </div>
+
             </div>
-            <% } %>
         </div>
+        <% }); %>
     </div>
-    <% }); %>
 </div>
 </body>
 

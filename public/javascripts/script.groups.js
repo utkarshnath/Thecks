@@ -49,8 +49,8 @@ $(function () {
         });
     }
 
-
-    $(".btn-group button").click(function () {
+    $("#btn-group div").click(function () {
+        console.log("Button clicked");
         // Make a get request for the group page
         var buttonId = $(this).attr('id');
         var vote = -1;
@@ -60,7 +60,7 @@ $(function () {
         if (buttonId == 'no-button') {
             vote = 0;
         }
-        var url = '/poll/' + $(this).closest(".panel").attr("data-pollId");
+        var url = '/poll/' + $(this).closest(".ui.fluid.card").attr("data-pollId");
         console.log(url);
         $.post(url , {vote: vote}, function (data) {
             console.log(data);

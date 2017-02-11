@@ -12,7 +12,7 @@ router.get('/' , function(request , response){
 // Handle post request
 router.post('/' , passport.authenticate('login' , {
    successRedirect : '/',
-   failureRedirect : '/login',
+   failureRedirect : '/',
    failureFlash : true
 }));
 
