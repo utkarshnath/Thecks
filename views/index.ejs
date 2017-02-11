@@ -7,9 +7,8 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">Evento</a>
-        </div>
+        <h1 class="ui teal header" style="margin-top: 32px ; margin-left: 32px ; margin-bottom: 32px">Evento</h1>
+        <div class="ui divider"></div>
         <ul class="nav navbar-nav navbar-right">
             <% if(currentUser){ %>
             <li>
@@ -66,15 +65,29 @@
 
     <!-- The list of the groups -->
     <% if (groups) { %>
-    <% groups.forEach(function (group) { %>
-    <a href="javascript:void(0)" class="list-item" data-groupId="<%= group._id %>" style="text-decoration: none">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <%= group.name() %>
-            </div>
+    <div class="ui three column grid">
+        <% groups.forEach(function (group, idx) { %>
+        <div class="column">
+            <a href="javascript:void(0)" class="list-item" data-groupId="<%= group._id %>"
+               style="text-decoration: none">
+                <div class="ui fluid card">
+                    <div class="ui image fluid">
+                        <img src="/images/background_<%= (idx % 6)+1 %>.png">
+                    </div>
+                    <div class="content">
+                        <a class="header"><%= group.name() %></a>
+                    </div>
+                    <div class="extra content">
+                        <a>
+                            <i class="user icon"></i>
+                            <%= group.members() %>
+                        </a>
+                    </div>
+                </div>
+            </a>
         </div>
-    </a>
-    <% }); %>
+        <% }); %>
+    </div>
     <% } %>
 </div>
 </body>
