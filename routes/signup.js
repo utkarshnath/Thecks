@@ -36,7 +36,7 @@ router.post('/', function (request, response, next) {
     });
 }, passport.authenticate('login', {
     successRedirect: '/',
-    failureRedirect: '/signup',
+    failureRedirect: '/',
     failureFlash: true
 }));
 
