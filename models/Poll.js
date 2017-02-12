@@ -1,6 +1,4 @@
-/**
- * Created by sparsh on 11/8/16.
- */
+
 var mongoose = require("mongoose");
 var Schema = require("mongoose/lib/schema.js");
 

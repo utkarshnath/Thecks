@@ -1,6 +1,4 @@
-/**
- * Created by sparsh on 10/8/16.
- */
+
 var mongoose = require("mongoose");
 var bcrypt = require("bcrypt-nodejs");
 

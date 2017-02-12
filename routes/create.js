@@ -1,6 +1,4 @@
-/**
- * Created by sparsh on 13/8/16.
- */
+
 var express = require("express");
 var Group = require("../models/Group");
 var User = require("../models/User");

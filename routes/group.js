@@ -1,6 +1,4 @@
-/**
- * Created by sparsh on 14/8/16.
- */
+
 var express = require('express');
 var mongoose = require('mongoose');
 
